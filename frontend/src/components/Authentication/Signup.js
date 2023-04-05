@@ -24,7 +24,7 @@ const Signup = () => {
     setPicLoading(true);
     if (!name || !email || !password || !confirmpassword) {
       toast({
-        title: "Please Fill all the Feilds",
+        title: "Please Fill all the Fields",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -81,7 +81,7 @@ const Signup = () => {
         position: "bottom",
       });
       setPicLoading(false);
-    }
+    } 
   };
 
   const postDetails = (pics) => {
@@ -96,17 +96,19 @@ const Signup = () => {
       });
       return;
     }
-    console.log(pics);
+    console.log("pics", pics);
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
-      data.append("upload_preset", "chat-app");
-      data.append("cloud_name", "piyushproj");
-      fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
+      data.append("upload_preset", "leap_app_1");
+      data.append("cloud_name", "dobbbmrr9");
+      fetch("https://api.cloudinary.com/v1_1/dobbbmrr9/image/upload", {
         method: "post",
         body: data,
       })
-        .then((res) => res.json())
+        .then((res) => {
+          res.json() 
+          })
         .then((data) => {
           setPic(data.url.toString());
           console.log(data.url.toString());
@@ -126,7 +128,7 @@ const Signup = () => {
       });
       setPicLoading(false);
       return;
-    }
+    } 
   };
 
   return (
