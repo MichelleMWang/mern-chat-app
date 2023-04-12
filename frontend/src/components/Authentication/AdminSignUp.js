@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 import { Select } from "@chakra-ui/react"
 import Multiselect from 'multiselect-react-dropdown';
 
-const Signup = () => {
+const AdminSignUp = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
@@ -21,10 +21,7 @@ const Signup = () => {
   const [password, setPassword] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
-  const [year, setYear] = useState();
-  const [school, setSchool] = useState();
-  const [subjects, setSubjects] = useState();
-  const role = "student"; 
+  //const role = "admin"; 
 
   const submitHandler = async () => {
     setPicLoading(true);
@@ -49,24 +46,20 @@ const Signup = () => {
       });
       return;
     }
-    console.log(name, email, password);
+    console.log(name, email, password, pic);
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
-      console.log("config")
       const { data } = await axios.post(
-        "/api/user/student",
+        "/api/user/admin",
         {
           name,
           email,
           password,
           pic,
-          year,  
-          school, 
-          subjects
         },
         config
       );
@@ -81,10 +74,7 @@ const Signup = () => {
       localStorage.setItem("userInfo", JSON.stringify(data));
       setPicLoading(false);
       history.push("/dashboard");
-
     } catch (error) {
-      console.log(role, error.response)
-
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -143,9 +133,6 @@ const Signup = () => {
       return;
     } 
   };
-  const onSelect = (selectedList, selectedItem) => {
-    setSubjects(selectedList); 
-  }
 
   return (
     <VStack spacing="1.5rem">
@@ -194,40 +181,6 @@ const Signup = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <FormControl id="year" isRequired>
-        <FormLabel>School Year</FormLabel>
-        <Select
-          placeholder="Select Your Year"
-          onChange={(e) => setYear(e.target.value)}>
-            <option>9th</option>
-            <option>10th</option>
-            <option>11th</option>
-            <option>12th</option>
-          </Select>
-      </FormControl>
-      <FormControl id="school" isRequired>
-        <FormLabel>School</FormLabel>
-        <Input
-          placeholder="Enter the School You Attend"
-          onChange={(e) => setSchool(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="subjects" isRequired>
-        <FormLabel>Subjects You Want Help On</FormLabel>
-        <Multiselect
-          isObject={false}
-          //displayValue="Select The Subjects You Can Tutor"
-          onSelect={onSelect}
-         options={[
-            'Option 1',
-            'Option 2',
-            'Option 3',
-            'Option 4',
-            'Option 5'
-          ]}>
-
-          </Multiselect>
-      </FormControl>
       <FormControl id="pic">
         <FormLabel>Upload your Picture</FormLabel>
         <Input
@@ -250,4 +203,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default AdminSignUp;

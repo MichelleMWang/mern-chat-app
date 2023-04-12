@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
-import { Button } from "@chakra-ui/react";
+import { Button, IconButton } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 
 const MyChats = ({ fetchAgain }) => {
@@ -68,20 +68,20 @@ const MyChats = ({ fetchAgain }) => {
       >
         My Chats
         <GroupChatModal>
-          <Button
-            d="flex"
+          <IconButton
+            display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon />}
+            icon={<AddIcon />}
           >
-            New Group Chat
-          </Button>
+            {/*New Group Chat */}
+          </IconButton>
         </GroupChatModal>
       </Box>
       <Box
-        d="flex"
+        display="flex"
         flexDir="column"
         p={3}
-        bg="#F8F8F8"
+        bg="#ebf7fc"
         w="100%"
         h="100%"
         borderRadius="lg"
@@ -93,8 +93,8 @@ const MyChats = ({ fetchAgain }) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
+                bg={selectedChat === chat ? "white" : "#ebf7fc"}
+                color={selectedChat === chat ? "black" : "black"}
                 px={3}
                 py={2}
                 borderRadius="lg"

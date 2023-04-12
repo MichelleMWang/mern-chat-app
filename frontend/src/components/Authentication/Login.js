@@ -54,8 +54,10 @@ const Login = () => {
         position: "bottom",
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log(JSON.stringify(data)); 
       setLoading(false);
-      history.push("/chats");
+      history.push("/dashboard");
+      
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -104,17 +106,6 @@ const Login = () => {
         isLoading={loading}
       >
         Login
-      </Button>
-      <Button
-        variant="solid"
-        colorScheme="red"
-        width="100%"
-        onClick={() => {
-          setEmail("guest@example.com");
-          setPassword("123456");
-        }}
-      >
-        Get Guest User Credentials
       </Button>
     </VStack>
   );

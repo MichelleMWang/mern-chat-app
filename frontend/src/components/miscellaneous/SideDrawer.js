@@ -55,6 +55,7 @@ function SideDrawer() {
     localStorage.removeItem("userInfo");
     history.push("/");
   };
+  
 
   const handleSearch = async () => {
     if (!search) {
@@ -126,24 +127,23 @@ function SideDrawer() {
     <>
       <Box
         d="flex"
-        justifyContent="space-between"
+        justifyContent="right"
         alignItems="center"
         bg="white"
         w="100%"
-        p="5px 10px 5px 10px"
-        borderWidth="5px"
+        p="10px 10px 0px 10px"
       >
-        <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
+      <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
             <Text d={{ base: "none", md: "flex" }} px={4}>
               Search User
             </Text>
           </Button>
-        </Tooltip>
+  </Tooltip> 
         <Text fontSize="2xl" fontFamily="Work sans">
           LEAP
-        </Text>
+  </Text> 
         <div>
           <Menu>
             <MenuButton p={1}>
@@ -218,7 +218,7 @@ function SideDrawer() {
             {loadingChat && <Spinner ml="auto" d="flex" />}
           </DrawerBody>
         </DrawerContent>
-      </Drawer>
+              </Drawer> 
     </>
   );
 }

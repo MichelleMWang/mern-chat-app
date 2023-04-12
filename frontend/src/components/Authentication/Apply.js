@@ -3,13 +3,14 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
+import { Select } from "@chakra-ui/react"
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import { Select } from "@chakra-ui/react"
 import Multiselect from 'multiselect-react-dropdown';
+//import {  MultiSelect } from 'chakra-multiselect'
 
-const Signup = () => {
+const Apply = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
@@ -19,12 +20,12 @@ const Signup = () => {
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
-  const [pic, setPic] = useState();
-  const [picLoading, setPicLoading] = useState(false);
   const [year, setYear] = useState();
   const [school, setSchool] = useState();
   const [subjects, setSubjects] = useState();
-  const role = "student"; 
+  const [pic, setPic] = useState();
+  const [picLoading, setPicLoading] = useState(false);
+  //const options = ["AP Biology", "AP Chemistry"]
 
   const submitHandler = async () => {
     setPicLoading(true);
@@ -49,22 +50,21 @@ const Signup = () => {
       });
       return;
     }
-    console.log(name, email, password);
+    console.log(name, email, password, pic);
     try {
       const config = {
         headers: {
           "Content-type": "application/json",
         },
       };
-      console.log("config")
       const { data } = await axios.post(
-        "/api/user/student",
+        "/api/user/tutor",
         {
           name,
           email,
           password,
           pic,
-          year,  
+          year, 
           school, 
           subjects
         },
@@ -81,10 +81,7 @@ const Signup = () => {
       localStorage.setItem("userInfo", JSON.stringify(data));
       setPicLoading(false);
       history.push("/dashboard");
-
     } catch (error) {
-      console.log(role, error.response)
-
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -213,7 +210,7 @@ const Signup = () => {
         />
       </FormControl>
       <FormControl id="subjects" isRequired>
-        <FormLabel>Subjects You Want Help On</FormLabel>
+        <FormLabel>Subjects You Can Tutor</FormLabel>
         <Multiselect
           isObject={false}
           //displayValue="Select The Subjects You Can Tutor"
@@ -244,10 +241,10 @@ const Signup = () => {
         onClick={submitHandler}
         isLoading={picLoading}
       >
-        Sign Up
+        Apply
       </Button>
     </VStack>
   );
 };
 
-export default Signup;
+export default Apply;

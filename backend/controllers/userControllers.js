@@ -19,11 +19,26 @@ const allUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
+const getApplications = asyncHandler(async (req, res) => {
+  console.log("tutors!"); 
+  try {
+  const tutors = await User.find({
+    role: "tutor applicant",
+  });
+
+  console.log("tutors: ", tutors); 
+  res.json(tutors);
+} catch(error) {
+  console.log(error);
+}
+
+})
+
 //@description     Register new user
 //@route           POST /api/user/
 //@access          Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
+  const { name, email, password, pic, role } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
@@ -42,6 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     pic,
+    role,
   });
 
   if (user) {
@@ -51,7 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,
-      role: user.roles, 
+      role: user.role, 
       token: generateToken(user._id),
     });
   } else {
@@ -74,7 +90,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      roles: user.roles, 
+      //role: user.role, 
       pic: user.pic,
       token: generateToken(user._id),
     });
@@ -83,7 +99,9 @@ const authUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid Email or Password");
   }
 });
+
 const registerStudent = asyncHandler(async (req, res) => {
+  console.log("in regi")
   const { name, email, password, pic } = req.body;
 
   if (!name || !email || !password) {
@@ -112,7 +130,9 @@ const registerStudent = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,
-      roles: ["student"], 
+      role: "student", 
+      tutors: [], 
+      subjects: [], 
       token: generateToken(user._id),
     });
   } else {
@@ -121,5 +141,83 @@ const registerStudent = asyncHandler(async (req, res) => {
   }
 });
 
+const registerTutor = asyncHandler(async (req, res) => {
+  const { name, email, password, pic } = req.body;
 
-module.exports = { allUsers, registerUser, authUser, registerStudent };
+  if (!name || !email || !password) {
+    res.status(400);
+    throw new Error("Please Enter all the Fields");
+  }
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    pic,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      role: "tutor applicant", 
+      students: [], 
+      subjects: [], 
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("User not found");
+  } 
+});
+
+const registerAdmin = asyncHandler(async (req, res) => {
+  const { name, email, password, pic } = req.body;
+
+  if (!name || !email || !password) {
+    res.status(400);
+    throw new Error("Please Enter all the Fields");
+  }
+
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    pic,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: true,
+      pic: user.pic,
+      role: "admin", 
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("Admin not found");
+  } 
+});
+
+
+module.exports = { allUsers, getApplications, registerUser, authUser, registerStudent, registerTutor, registerAdmin };

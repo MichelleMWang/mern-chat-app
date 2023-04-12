@@ -43,6 +43,16 @@ function initial() {
       });
 
       new Role({
+        name: "tutor applicant"
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'tutor applicant' to roles collection");
+      });
+
+      new Role({
         name: "admin"
       }).save(err => {
         if (err) {
