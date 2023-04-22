@@ -1,4 +1,3 @@
 - button for admins to review tutor applicants and switch to tutor 
 - dashboard for students, tutors, admin 
-- signin/application routes 
 - assign tutors to students and students to tutors 

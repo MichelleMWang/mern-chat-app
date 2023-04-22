@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Box } from "@chakra-ui/layout";
+import ApplicationSidebar from './ApplicationSidebar';
+import ApplicationBox from './ApplicationBox';
 
 const ApplicationComponent = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-      const response = await axios.get('/api/user/applications');
-      console.log("users", response.data)
-      setUsers(response.data);
-    fetchUsers();
-  } catch (error) {
-    console.log("ha"); 
-    console.error(error); 
-  }
-  } }, []);
-
+  const [selectedApp, setSelectedApp] = useState(""); 
   return (
     <div>
-      <h2>Tutor Users</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user._id}>
-            <p>Name: {user.name}</p>
-            <p>Email: {user.email}</p>
-          </li>
-        ))}
-      </ul>
+      <Box display="flex" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
+        {/*user && <MyChats fetchAgain={fetchAgain} />}
+        {user && (
+          <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        ) */ }
+        <ApplicationSidebar selectedApp={selectedApp} setSelectedApp={setSelectedApp}/>
+        <ApplicationBox selectedApp={selectedApp}></ApplicationBox>
+      </Box>
     </div>
   );
 };

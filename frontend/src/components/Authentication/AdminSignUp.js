@@ -21,6 +21,7 @@ const AdminSignUp = () => {
   const [password, setPassword] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
+  const [role, setRole] = useState("admin")
   //const role = "admin"; 
 
   const submitHandler = async () => {
@@ -59,7 +60,8 @@ const AdminSignUp = () => {
           name,
           email,
           password,
-          pic,
+          role,
+          pic
         },
         config
       );

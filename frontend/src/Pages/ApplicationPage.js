@@ -12,17 +12,19 @@ const ApplicationPage = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    if (!user.isAdmin) history.push("/dashboard");
-  }, [history]);
+    if (user.role !== "admin") history.push("/dashboard");
+  }, [history]); 
   
   return (
     <div style={{ width: "100%" }}>
-      {user && <SideDrawer></SideDrawer>}
       <SideBar/>
-      <Box ml="270px" display="flex" justifyContent="space-between" w="100%" h="91.5vh" p="32px">
-        {user && <div>hi {user.name}! 👋 </div>}
+      <Box ml="270px">
+      {user && <SideDrawer />}
+      
+      <Box display="flex" justifyContent="space-between" h="91.5vh" p="32px">
+        {user && <ApplicationComponent></ApplicationComponent>}
       </Box>
-      <ApplicationComponent></ApplicationComponent>
+      </Box>
     </div>
   );
 };

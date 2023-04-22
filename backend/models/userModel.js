@@ -6,12 +6,12 @@ const userSchema = mongoose.Schema(
     name: { type: "String", required: true },
     email: { type: "String", unique: true, required: true },
     password: { type: "String", required: true },
+    role: { type: "String", required: true},
     subjects: { type: "Array", required: false }, 
     tutors: { type: "Array", required: false }, 
     students: { type: "Array", required: false }, 
     year: { type: "Number", required: false }, 
     school: { type: "String", required: false }, 
-    role: { type: "String", required: false},
     pic: {
       type: "String",
       required: true,

@@ -24,7 +24,7 @@ const Signup = () => {
   const [year, setYear] = useState();
   const [school, setSchool] = useState();
   const [subjects, setSubjects] = useState();
-  const role = "student"; 
+  const [role, setRole] = useState("student"); 
 
   const submitHandler = async () => {
     setPicLoading(true);
@@ -63,6 +63,7 @@ const Signup = () => {
           name,
           email,
           password,
+          role,
           pic,
           year,  
           school, 

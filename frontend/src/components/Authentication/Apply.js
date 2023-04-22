@@ -25,6 +25,7 @@ const Apply = () => {
   const [subjects, setSubjects] = useState();
   const [pic, setPic] = useState();
   const [picLoading, setPicLoading] = useState(false);
+  const [role, setRole] = useState("tutor applicant"); 
   //const options = ["AP Biology", "AP Chemistry"]
 
   const submitHandler = async () => {
@@ -50,7 +51,7 @@ const Apply = () => {
       });
       return;
     }
-    console.log(name, email, password, pic);
+    console.log(name, email, password, pic, role);
     try {
       const config = {
         headers: {
@@ -63,6 +64,7 @@ const Apply = () => {
           name,
           email,
           password,
+          role,
           pic,
           year, 
           school, 

@@ -11,6 +11,7 @@ const SideBar = () => {
     const indicatorRef = useRef();
     const location = useLocation();
     const { user } = ChatState();
+    const [indicatorLoading, setIndicatorLoading] = useState(false);
     const [items, setItems] = useState([]); 
   
     useEffect(() => {
@@ -309,15 +310,17 @@ const SideBar = () => {
                 ]); 
               }         
         }
-      }, []);
+      }, [user]);
 
     useEffect(() => {
-        //console.log("sidebar" + sidebarRef.current.querySelector('.sidebar__menu__item').clientHeight); 
         setTimeout(() => {
             const sidebarItem = sidebarRef.current.querySelector('.sidebar__menu__item');
+            //console.log(indicatorRef); 
             indicatorRef.current.style.height = `${sidebarItem.clientHeight}px`;
             setStepHeight(sidebarItem.clientHeight);
-        }, 50);
+            setIndicatorLoading(false); 
+        }, 100);
+        
     }, []);
 
     // change active index
@@ -333,13 +336,13 @@ const SideBar = () => {
             <img src={logo} alt="leap logo"></img>
         </div>
         <div ref={sidebarRef} className="sidebar__menu">
-            <div
+            {!indicatorLoading && <div
                 ref={indicatorRef}
                 className="sidebar__menu__indicator"
                 style={{
                     transform: `translateX(-50%) translateY(${activeIndex * stepHeight}px)`
-                }}
-            ></div>
+                }} 
+            ></div> } 
             {
                 items.map((item, index) => (
                     <Link to={item.to} key={index}>
